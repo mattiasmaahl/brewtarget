@@ -58,7 +58,7 @@ jobs:
           target: 'desktop'
           dir: '/C/QT/'
           install-deps: 'true'
-#          arch: 'win64_mingw81'
+          arch: 'win32_mingw81'
 
       - name: Download nsis plugins
         run: |
