@@ -51,7 +51,7 @@ jobs:
           #mingw-w64-${{ matrix.arch }}-qt5 // save for later maybe, this will install the latest version of QT, below we can specify version
 
       - name: Install QT
-        uses: jurpel/install-qt-action@v2
+        uses: jurplel/install-qt-action@v2
         with:
           version: '5.15.1'
           host: 'windows'
