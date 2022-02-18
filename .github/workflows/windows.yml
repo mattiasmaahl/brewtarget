@@ -41,7 +41,6 @@ jobs:
             mingw-w64-${{ matrix.arch }}-cmake
             mingw-w64-${{ matrix.arch }}-make
             mingw-w64-${{ matrix.arch }}-gcc
-            mingw-w64-${{ matrix.arch }}-qt5
             mingw-w64-${{ matrix.arch }}-xalan-c
             mingw-w64-${{ matrix.arch }}-nsis
             mingw-w64-${{ matrix.arch }}-boost
@@ -49,6 +48,16 @@ jobs:
           update: true
           release: true
           path-type: strict
+          #mingw-w64-${{ matrix.arch }}-qt5 // save for later maybe, this will install the latest version of QT, below we can specify version
+
+      - name: Install QT
+        uses: jurpel/install-qt-action@v2
+        with:
+          version: '5.15.1'
+          host: 'windows'
+          target: 'desktop'
+          dir: '/C/QT/'
+          install-deps: 'true'
 
       - name: Download nsis plugins
         run: |
