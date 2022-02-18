@@ -60,6 +60,9 @@ jobs:
           install-deps: 'true'
           arch: 'win32_mingw81'
 
+      - name: Add QT to the path
+        run: echo "D:\C\QT\Qt\5.15.1\mingw81_32\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
       - name: Download nsis plugins
         run: |
           New-Item -ItemType Directory -Force -Path .\temp\build
@@ -82,9 +85,9 @@ jobs:
              cmake .. -DCMAKE_RC_COMPILER:FILEPATH=windres.exe -DCMAKE_PREFIX_PATH:STRING=$Qt5_Dir -G "MinGW Makefiles"
 
       - name: Build
-#        shell: msys2 {0}
+        shell: msys2 {0}
         run: |
-             cd C:\_\build
+             cd /C/_/build
              cmake --build .
 
       - name: Test
