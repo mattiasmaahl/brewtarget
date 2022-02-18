@@ -79,7 +79,7 @@ jobs:
              cp ./Locate/Include/Locate.nsh /mingw32/share/nsis/Include/
              cp ./Locate/Plugin/locate.dll /mingw32/share/nsis/Plugins/ansi/
              cp ./Nsislog/plugin/nsislog.dll /mingw32/share/nsis/Plugins/ansi
-             cmake .. -DCMAKE_RC_COMPILER:FILEPATH=windres.exe -DCMAKE_PREFIX_PATH:STRING=%Qt5_DIR% -G "MinGW Makefiles"
+             cmake .. -DCMAKE_RC_COMPILER:FILEPATH=windres.exe -DCMAKE_PREFIX_PATH:STRING=$Qt5_DIR -G "MinGW Makefiles"
 
       - name: Build
         shell: msys2 {0}
