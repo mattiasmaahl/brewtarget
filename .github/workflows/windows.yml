@@ -82,9 +82,9 @@ jobs:
              cmake .. -DCMAKE_RC_COMPILER:FILEPATH=windres.exe -DCMAKE_PREFIX_PATH:STRING=$Qt5_Dir -G "MinGW Makefiles"
 
       - name: Build
-        shell: msys2 {0}
+#        shell: msys2 {0}
         run: |
-             cd /C/_/build
+             cd C:\_\build
              cmake --build .
 
       - name: Test
