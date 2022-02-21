@@ -56,7 +56,7 @@ jobs:
           version: '5.15.1'
           host: 'windows'
           target: 'desktop'
-          dir: '/C/QT/'
+          #dir: '/C/QT/'
           install-deps: 'true'
           arch: 'win32_mingw81'
 

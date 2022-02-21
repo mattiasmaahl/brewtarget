@@ -209,7 +209,8 @@ namespace {
       // Recreate/reopen the log file
       // Test default location
       logFile.setFileName(logDirectory.filePath(logFileFullName()));
-      if (logFile.open(QIODevice::WriteOnly | QIODevice::Append)) {
+      if (logFile.open(QIODevice::OpenModeFlag::ReadWrite | QIODevice::Append)) {
+         logFile.setPermissions(QFileDevice::WriteUser | QFileDevice::ReadUser | QFileDevice::ExeUser);
          stream = new QTextStream(&logFile);
          qInfo() << Q_FUNC_INFO << "Logging to file" << QFileInfo(logFile).canonicalFilePath();
          return true;
@@ -242,22 +243,33 @@ namespace {
    void pruneLogFiles() {
       QMutexLocker locker(&mutex);
       // Need to close and reset the stream before deleting any files.
-      closeLogFile();
 
+      closeLogFile();
+      // while the Log file is closed, send all logs to Stderr.
+      Logging::setLoggingToStderr(true);
+      qDebug() << Q_FUNC_INFO << "Closed log file" << logFile.fileName() << ", logging to Stderr";
       // If the logfile is closed and we're in testing mode where stderr is disabled, we need to enable it temporarily.
       // saving old value to reset to after pruning.
       TemporarilyForceStderrLogging temporarilyForceStderrLogging;
 
       //Get the list of log files.
       QFileInfoList fileList = Logging::getLogFileList();
+      qDebug() << Q_FUNC_INFO << "Found" << fileList.size() << "log files.";
       if (fileList.size() > Logging::logFileCount)
       {
          for (int i = 0; i < (fileList.size() - Logging::logFileCount); i++)
          {
             QFile f(QString(fileList.at(i).canonicalFilePath()));
-            f.remove();
+            qDebug() << Q_FUNC_INFO << "Removing file:" << f.fileName();
+            if (!f.remove())
+            {
+               QFileDevice::FileError err = f.error();
+               qCritical() << Q_FUNC_INFO << "Error code:" << err << ":" << f.errorString() << "- Trying to remove file:" << f.fileName();
+            }
          }
       }
+      // Resetting to log to file, expecting that a file will be reopened at a later stage.
+      Logging::setLoggingToStderr(false);
       return;
    }
 
