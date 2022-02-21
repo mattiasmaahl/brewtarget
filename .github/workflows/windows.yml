@@ -94,6 +94,8 @@ jobs:
         shell: msys2 {0}
         run: |
              cd /C/_/build
+             echo $PATH
+             echo $env:GITHUB_PATH
              cp -R src/windeployqt/* src/
              cmake --build . --target test
 
