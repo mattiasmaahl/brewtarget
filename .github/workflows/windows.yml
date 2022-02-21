@@ -61,9 +61,7 @@ jobs:
           arch: 'win32_mingw81'
 
       - name: Add QT to the path
-        run: |
-             echo "$Qt5_Dir\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-             echo "$Qt5_Dir\lib" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+        run: echo "$Qt5_Dir\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       - name: Download nsis plugins
         run: |
@@ -96,6 +94,7 @@ jobs:
         shell: msys2 {0}
         run: |
              cd /C/_/build
+             cp -R src/windeployqt/* src/
              cmake --build . --target test
 
       - name: Package
