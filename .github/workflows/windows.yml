@@ -93,6 +93,7 @@ jobs:
       - name: Test
         shell: msys2 {0}
         run: |
+             PATH=$PATH:/C/_/build/src
              cd /C/_/build
              cmake --build . --target test
 
