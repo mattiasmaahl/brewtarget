@@ -353,10 +353,10 @@ void Testing::testUnitConversions() {
                       0.001),
             "Unit conversion error (Plato to SG)");
    QVERIFY2(
-      fuzzyComp(Measurement::UnitSystems::color_StandardReferenceMethod.qstringToSI("1,083 ebc",
+      fuzzyComp(Measurement::UnitSystems::color_StandardReferenceMethod.qstringToSI("1.083 ebc",
                                                                                     Measurement::Units::srm).quantity,
-                550,
-                1),
+                0.550,
+                0.001),
       "Unit conversion error (EBC to SRM)"
    );
 
